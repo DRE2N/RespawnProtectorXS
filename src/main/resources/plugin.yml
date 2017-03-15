@@ -1,0 +1,6 @@
+name: RespawnProtectorXS
+main: io.github.dre2n.respawnprotectorxs.RespawnProtectorXS
+version: ${project.version}${buildNo}
+author: Daniel Saukel
+description: ${project.description}
+website: ${project.url}
