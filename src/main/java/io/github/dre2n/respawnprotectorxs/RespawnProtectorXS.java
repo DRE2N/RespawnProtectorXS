@@ -21,10 +21,12 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -74,10 +76,19 @@ public class RespawnProtectorXS extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDamage(EntityDamageEvent event) {
+    public void onPlayerEvent(EntityDamageByEntityEvent event) {
         if (cache.contains(event.getEntity())) {
+            Player player = (Player) event.getEntity();
+            player.sendActionBar(ChatColor.GREEN + "Respawn-Schutz aktiv");
             event.setCancelled(true);
         }
+        if (cache.contains(event.getDamager())) {
+            Player player = (Player) event.getEntity();
+            player.sendActionBar(ChatColor.RED + "Respawn-Schutz entfernt!");
+            cache.remove(event.getDamager());
+        }
+
     }
+
 
 }
